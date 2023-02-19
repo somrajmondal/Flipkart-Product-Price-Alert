@@ -1,0 +1,30 @@
+import tkinter.messagebox
+import requests as re
+import bs4
+import time
+
+def check_product_price(product_page):
+    url_request = re.get(product_page)
+    soup = bs4.BeautifulSoup(url_request.text, 'html.parser')
+    product_name = soup.find('h1')
+    product_name_text=product_name.text
+    print(product_name_text)
+
+    while True:
+        product_price= soup.find("div",{"class":'_30jeq3 _16Jk6d'}).text
+        print(product_price)
+        actual_price=product_price[1:3] + product_price[4:]
+        print(actual_price)
+        actual_price = int(actual_price)
+        time.sleep(5)
+        if actual_price<35000:
+            tkinter.messagebox.showinfo(title=f'Price Alert of {product_name_text}',message=f'It is on Discount Price! {actual_price} Buy Now')
+        elif actual_price == actual_price:
+            tkinter.messagebox.showinfo(title=f'Price Alert of {product_name_text}',message=f'It is on Present Price {actual_price}')
+        elif actual_price>39000:
+            tkinter.messagebox.showinfo(title=f'Price Alert of {product_name_text}',message=f'It is higher than Normal, Not Buy {actual_price}')
+#checking
+product_page = "https://www.flipkart.com/realme-gt-2-paper-green-128-gb/p/itmac4c08a9eb2da?pid=MOBGDAT7NHKJMJZ3&lid=LSTMOBGDAT7NHKJMJZ3ZX1I3H&marketplace=FLIPKART&store=tyy%2F4io&srno=b_1_1&otracker=hp_bannerads_1_2.bannerAdCard.BANNERADS_f_A8JR2JWF8107&fm=organic&iid=889e95b7-2fb7-498f-a7d8-6bd97caf48a3.MOBGDAT7NHKJMJZ3.SEARCH&ppt=hp&ppn=homepage&ssid=ygte5efw3k0000001676790098582"
+print(check_product_price(product_page))
+
+
